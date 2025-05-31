@@ -4,3 +4,6 @@ joblib
 scikit-learn
 plotly
 fpdf
+python-telegram-bot==20.7
+streamlit
+numpy
