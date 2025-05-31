@@ -55,19 +55,23 @@ def main():
     st.set_page_config(page_title="HealthMate AI Dashboard", layout="centered")
 
     st.title("🤖 HealthMate AI Wellness Dashboard")
+    
+    df = pd.read_csv("user_health_data.csv")
 
-    # Get user_id from query params
-    query_params = st.query_params
-    user_id = query_params.get("user_id", [None])[0]
+    params = st.query_params
+    user_id = params.get("user_id")
 
-    if not user_id:
-        st.warning("No user_id provided. Please open this dashboard from the bot's link.")
+    if user_id is None:
+        st.error("Missing user_id in URL. Please provide a valid user ID as a query parameter like `?user_id=123`.")
         st.stop()
 
-    # Load data
-    df = load_data()
+    try:
+        user_id = int(user_id)
+    except ValueError:
+        st.error("Invalid user_id format. It should be a number.")
+        st.stop()
 
-    user_data = df[df['user_id'] == int(user_id)]
+    user_data = df[df["UserID"] == user_id]
     if user_data.empty:
         st.error("No data found for your user ID. Please complete your health checkup first.")
         st.stop()
@@ -113,4 +117,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
