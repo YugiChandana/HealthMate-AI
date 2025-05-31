@@ -1,1 +1,3 @@
+This .csv file is used to store all the data of the users that have completed the conversation with the bot.
 
+it creates a new row when a new conversation is started with the chatbot
